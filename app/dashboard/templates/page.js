@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/supabase";
 import { useAuth } from "@/context/AuthContext";
-import ThemeToggle from "@/components/ThemeToggle";
 import { FiHome, FiFilePlus, FiCheckCircle, FiUsers, FiLayers, FiSettings, FiTrash2, FiUpload, FiEye, FiFile } from "react-icons/fi";
 
 export default function ManageTemplates() {

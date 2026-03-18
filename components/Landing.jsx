@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import css from "@/app/fanta.css";
 
 export default function Landing() {
   const router = useRouter();

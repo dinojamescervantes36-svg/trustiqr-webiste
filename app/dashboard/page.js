@@ -4,7 +4,6 @@ import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "@/supabase";
 import { useAuth } from "@/context/AuthContext";
-import ThemeToggle from "@/components/ThemeToggle";
 
 import {
   Chart as ChartJS, CategoryScale, LinearScale, PointElement,
