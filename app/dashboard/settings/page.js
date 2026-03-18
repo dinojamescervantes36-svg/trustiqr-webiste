@@ -79,7 +79,6 @@ export default function SettingsPage() {
             {saving && <span className="saving-indicator">Saving…</span>}
           </div>
         </div>
-
         <div className="settings-grid">
           <div className="card settings-card">
             <h3>Application Appearance</h3>
