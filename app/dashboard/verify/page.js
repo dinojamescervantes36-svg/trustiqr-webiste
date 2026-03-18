@@ -8,6 +8,24 @@ import QRCode from "react-qr-code";
 
 import { FiHome, FiFilePlus, FiCheckCircle, FiUsers, FiLayers, FiSettings, FiSearch, FiPlus, FiTrash2, FiEye, FiRefreshCw, FiX, FiExternalLink, FiEdit2, FiCheck } from "react-icons/fi";
 
+export const dynamic = "force-dynamic";
+
+import { useTheme } from "@/context/ThemeContext";
+
+export default function SettingsPage() {
+  const theme = useTheme();
+
+  const isDark = theme?.isDark ?? false;
+  const toggleTheme = theme?.toggleTheme ?? (() => {});
+
+  return (
+    <div style={{ padding: 40 }}>
+      <h1>Settings</h1>
+      <p>Theme: {isDark ? "Dark" : "Light"}</p>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+    </div>
+  );
+}
 export default function VerifyCertificate() {
   const router       = useRouter();
   const searchParams = useSearchParams();

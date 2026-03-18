@@ -10,6 +10,38 @@ import {
   FiHome, FiFilePlus, FiCheckCircle, FiUsers, FiLayers, FiSettings,
 } from "react-icons/fi";
 
+import { useSearchParams } from "next/navigation";
+
+export const dynamic = "force-dynamic";
+
+import { useTheme } from "@/context/ThemeContext";
+
+export default function SettingsPage() {
+  const theme = useTheme();
+
+  const isDark = theme?.isDark ?? false;
+  const toggleTheme = theme?.toggleTheme ?? (() => {});
+
+  return (
+    <div style={{ padding: 40 }}>
+      <h1>Settings</h1>
+      <p>Theme: {isDark ? "Dark" : "Light"}</p>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+    </div>
+  );
+}
+
+export default function VerifyClient() {
+  const params = useSearchParams();
+
+  return (
+    <div style={{ padding: 40 }}>
+      Verify Token: {params.get("token")}
+    </div>
+  );
+}
+
+
 export default function SettingsPage() {
   const router = useRouter();
   const { currentUser, isLoadingUser } = useAuth();

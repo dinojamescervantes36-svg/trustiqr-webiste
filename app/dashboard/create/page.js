@@ -5,6 +5,19 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/supabase";
 import { useAuth } from "@/context/AuthContext";
 
+import { Suspense } from "react";
+import CreateClient from "./CreateClient";
+
+export const dynamic = "force-dynamic";
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div style={{ padding: 40 }}>Loading...</div>}>
+      <CreateClient />
+    </Suspense>
+  );
+}
+
 import {
   FiHome, FiFilePlus, FiCheckCircle, FiUsers,
   FiLayers, FiSettings, FiAward, FiMail, FiDownload, FiCopy,
