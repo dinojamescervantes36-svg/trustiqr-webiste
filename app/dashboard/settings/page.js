@@ -72,7 +72,7 @@ export default function SettingsPage() {
         </div>
         <ul>
           <li onClick={() => router.push("/dashboard")}><FiHome /> Dashboard</li>
-          <li onClick={() => router.push("/dashboard/create")}><FiFilePlus /> Create Certificates</li>
+          <li onClick={() => router.push("/dashboard/create")}><FiFilePlus /> Create New Certificates</li>
           <li onClick={() => router.push("/dashboard/verify")}><FiCheckCircle /> Verify Certificate</li>
           <li onClick={() => router.push("/dashboard/templates")}><FiLayers /> Manage Templates</li>
           <li onClick={() => router.push("/dashboard/users")}><FiUsers /> User Accounts</li>
