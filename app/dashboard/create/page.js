@@ -568,3 +568,32 @@ export default function CreateCertificate() {
     </div>
   );
 }
+
+const handleIssueBatch = async (batchData) => {
+  // batchData: [{ fullName, email, program, certificateTitle }, ...]
+  const results = [];
+  
+  for (const item of batchData) {
+    const hash = generateUniqueHash();
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${origin}/verify/${hash}`;
+    
+    const { error } = await supabase.from("certificates").insert({
+      user_id: currentUser.id,
+      cert_id: hash,
+      recipient_name: item.fullName,
+      email: item.email,
+      program: item.program,
+      certificate_title: item.certificateTitle,
+      unique_hash: hash,
+      status: "Issued",
+      completion_date: new Date().toISOString().split('T')[0],
+    });
+    
+    if (!error) {
+      results.push({ name: item.fullName, hash, url });
+    }
+  }
+  
+  return results;
+};
