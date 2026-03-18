@@ -1,5 +1,5 @@
 -- =====================================================
--- TrustiQR - Run this in Supabase SQL Editor
+-- TrustiQR - Full Setup (v2) – Run in Supabase SQL Editor
 -- =====================================================
 
 create table public.profiles (
@@ -26,9 +26,14 @@ create table public.certificates (
   program text,
   certificate_title text,
   template text default 'Academic Degree',
+  template_id text,
+  template_name text,
   completion_date date,
   unique_hash text unique,
   status text default 'Issued',
+  -- Filename tracking
+  original_filename text,   -- auto-suggested name based on cert details
+  custom_filename text,     -- user-edited name (what gets stored/displayed)
   created_at timestamp with time zone default timezone('utc'::text, now())
 );
 
