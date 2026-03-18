@@ -138,6 +138,7 @@ export default function CreateCertificate() {
     const { error } = await supabase.from("certificates").insert({
       user_id:           currentUser.id,
       cert_id:           hash,
+      unique_hash: adding.id,
       recipient_name:    form.fullName,
       email:             form.email,
       program:           form.program,

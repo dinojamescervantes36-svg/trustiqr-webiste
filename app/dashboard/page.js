@@ -165,12 +165,14 @@ export default function Dashboard() {
     const filePath = `${currentUser.id}/${Date.now()}_${f.name}`;
     await supabase.storage.from("certificates").upload(filePath, f);
     const certId = `file-${Date.now()}`;
-    const { data } = await supabase.from("certificates").insert({
-      user_id: currentUser.id, cert_id: certId,
-      certificate_title: `Uploaded: ${f.name}`,
-      custom_filename: f.name.replace(/\.[^.]+$/, ""),
-      status: "Issued", completion_date: new Date().toISOString().slice(0, 10),
-    }).select().single();
+      const { data } = await supabase.from("certificates").insert({
+        user_id: currentUser.id, 
+        cert_id: certId,
+        unique_hash: certId,  // ← ADD THIS LINE
+        recipient_name: "",   // ← ADD THIS LINE
+        certificate_title: `Uploaded: ${f.name}`,
+        // ... other fields
+      }).select().single();
     if (data) setCertificates(prev => [{ id: data.cert_id, recipient: "", date: data.completion_date, status: "issued", summary: data.certificate_title }, ...prev]);
   };
 
