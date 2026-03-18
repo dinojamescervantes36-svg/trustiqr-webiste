@@ -106,16 +106,25 @@ export default function VerifyCertificate() {
   };
 
   const handleAddOpen = () => {
-    setAdding({ id:`CERT-${Math.random().toString(36).slice(2,9).toUpperCase()}`, name:"", issued:new Date().toISOString().slice(0,10), status:"Issued" });
-    setShowAdd(true);
-  };
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+  const certId = `CERT-${timestamp}-${random}`;
+  
+  setAdding({ 
+    id: certId,  // Much better format!
+    name: "",
+    issued: new Date().toISOString().slice(0, 10),
+    status: "Issued"
+  });
+  setShowAdd(true);
+};
 
   const handleAddSave = async () => {
     if (!adding.name.trim()||!adding.id.trim()) { alert("Please provide certificate ID and recipient name."); return; }
     const { error } = await supabase.from("certificates").insert({
-      user_id:currentUser.id, cert_id:adding.id, unique_hash:adding.id, recipient_name:adding.name,
+      user_id:currentUser.id, cert_id:adding.id, recipient_name:adding.name,
       completion_date:adding.issued||null, status:adding.status,
-      original_filename:adding.name, custom_filename:adding.name,
+      unique_hash:adding.id, original_filename:adding.name, custom_filename:adding.name,
     });
     if (!error) setShowAdd(false);
   };
@@ -123,17 +132,6 @@ export default function VerifyCertificate() {
   const handleRemove = async (id) => {
     if (!confirm("Remove this certificate?")) return;
     await supabase.from("certificates").delete().eq("cert_id",id).eq("user_id",currentUser.id);
-  };
-
-  // ✅ FIXED: handleView function for issued certificates
-  const handleView = async (cert) => {
-    try {
-      // Open the PUBLIC VERIFICATION PAGE
-      const verifyUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/verify/${cert.hash || cert.id}`;
-      window.open(verifyUrl, "_blank");
-    } catch (err) {
-      alert("Failed to open certificate: " + err.message);
-    }
   };
 
   return (
@@ -261,7 +259,7 @@ export default function VerifyCertificate() {
                         <td>{cert.name}</td>
                         <td><span className={`badge ${(cert.status||"").toLowerCase()}`}>{cert.status}</span></td>
                         <td className="actions-cell">
-                          <button title="View" onClick={()=>handleView(cert)} className="btn"><FiEye/></button>
+                          <button title="View" onClick={()=>setViewCert(cert)} className="btn"><FiEye/></button>
                           <a href={getVerifyUrl(cert)} target="_blank" rel="noopener noreferrer" className="btn" title="Public page" style={{textDecoration:"none"}}><FiExternalLink/></a>
                           <button title="Delete" onClick={()=>handleRemove(cert.id)} className="btn danger"><FiTrash2/></button>
                         </td>
@@ -290,7 +288,7 @@ export default function VerifyCertificate() {
                       <div className="cert-date">{cert.issued}</div>
                     </div>
                     <div className="card-action-buttons">
-                      <button onClick={()=>handleView(cert)} className="btn"><FiEye/> View</button>
+                      <button onClick={()=>setViewCert(cert)} className="btn"><FiEye/> View</button>
                       <a href={getVerifyUrl(cert)} target="_blank" rel="noopener noreferrer" className="btn" style={{textDecoration:"none"}}><FiExternalLink/> Open</a>
                       <button onClick={()=>handleRemove(cert.id)} className="btn danger"><FiTrash2/> Delete</button>
                     </div>
