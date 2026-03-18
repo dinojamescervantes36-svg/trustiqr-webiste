@@ -70,10 +70,11 @@
   --badge-issued-bg:   rgba(74,222,128,0.12);
   --badge-issued-text: #4ade80;
   --badge-pending-bg:  rgba(96,165,250,0.12);
-  --badge-pending-text:#9ca3af;
+  --badge-pending-text:#60a5fa;
   --badge-revoked-bg:  rgba(248,113,113,0.12);
   --badge-revoked-text:#f87171;
 }
+
 
 /* ═══════════════════════════════════════════════════════════════ */
 /* BASE                                                            */

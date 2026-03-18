@@ -10,6 +10,7 @@ export default function ThemeToggle({ style }) {
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
       style={style}
     >
+      
       {isDark ? "☀️" : "🌙"}
       <span style={{ fontSize: 12 }}>{isDark ? "Light" : "Dark"}</span>
     </button>
