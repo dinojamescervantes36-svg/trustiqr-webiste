@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/supabase";
 import { useAuth } from "@/context/AuthContext";
-import ThemeToggle from "@/components/ThemeToggle";
+
 import {
   FiHome, FiFilePlus, FiCheckCircle, FiUsers,
   FiLayers, FiSettings, FiAward, FiMail, FiDownload, FiCopy,

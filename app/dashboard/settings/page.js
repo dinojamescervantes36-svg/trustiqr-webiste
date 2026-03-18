@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/context/ThemeContext";
 import { supabase } from "@/supabase";
-import ThemeToggle from "@/components/ThemeToggle";
+
 import {
   FiHome, FiFilePlus, FiCheckCircle, FiUsers, FiLayers, FiSettings,
 } from "react-icons/fi";

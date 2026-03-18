@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/supabase";
 import { useAuth } from "@/context/AuthContext";
 import QRCode from "react-qr-code";
-import ThemeToggle from "@/components/ThemeToggle";
+
 import { FiHome, FiFilePlus, FiCheckCircle, FiUsers, FiLayers, FiSettings, FiSearch, FiPlus, FiTrash2, FiEye, FiRefreshCw, FiX, FiExternalLink, FiEdit2, FiCheck } from "react-icons/fi";
 
 export default function VerifyCertificate() {
