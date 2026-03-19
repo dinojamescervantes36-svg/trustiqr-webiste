@@ -198,17 +198,3 @@ function CertificateDisplay({ cert }) {
     </div>
   );
 }
-
-export async function generateMetadata({ params }) {
-  const hash = decodeURIComponent(params.hash);
-  // In a real scenario, you'd fetch cert data server-side
-  return {
-    title: `Certificate Verification - TrustiQR`,
-    description: `Verify this TrustiQR certificate by scanning the QR code or visiting this page.`,
-    openGraph: {
-      title: `Certificate Verification - TrustiQR`,
-      description: `Verify this authentic certificate.`,
-      type: "website",
-    },
-  };
-}
