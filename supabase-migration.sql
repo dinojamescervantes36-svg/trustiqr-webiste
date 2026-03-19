@@ -8,7 +8,8 @@ alter table public.certificates
   add column if not exists custom_filename text,
   add column if not exists original_filename text,
   add column if not exists template_id text,
-  add column if not exists template_name text;
+  add column if not exists template_name text,
+  add column if not exists file_path text;
 
 -- Backfill: set original_filename from certificate_title for existing rows
 update public.certificates

@@ -34,6 +34,7 @@ create table public.certificates (
   -- Filename tracking
   original_filename text,   -- auto-suggested name based on cert details
   custom_filename text,     -- user-edited name (what gets stored/displayed)
+  file_path text,           -- storage path of uploaded certificate image/pdf
   created_at timestamp with time zone default timezone('utc'::text, now())
 );
 

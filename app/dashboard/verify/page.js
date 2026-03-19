@@ -46,6 +46,7 @@ export default function VerifyCertificate() {
     templateName:     c.template_name     || c.template || "",
     customFilename:   c.custom_filename   || c.certificate_title || c.cert_id,
     originalFilename: c.original_filename || "",
+    filePath:         c.file_path         || null,
   });
 
   const loadCertificates = useCallback(async () => {
@@ -359,13 +360,24 @@ export default function VerifyCertificate() {
                 <button onClick={()=>setViewCert(null)} style={{background:"none",border:"none",cursor:"pointer",fontSize:20,color:"#666"}}><FiX/></button>
               </div>
               <div style={{border:"2px solid #e6f4ea",borderRadius:12,padding:24,textAlign:"center",marginBottom:20}}>
-                <img src="/img/logo.png" alt="logo" style={{height:40,margin:"0 auto 10px"}}/>
-                <h4 style={{margin:"0 0 4px",color:"#1e8e3e",fontSize:18}}>Certificate of Completion</h4>
-                {viewCert.templateName&&<p style={{margin:"0 0 8px",fontSize:12,color:"#bbb"}}>Template: {viewCert.templateName}</p>}
-                <p style={{color:"#888",margin:"0 0 12px",fontSize:13}}>This is to certify that</p>
-                <h2 style={{margin:"0 0 6px",fontSize:24,color:"#111"}}>{viewCert.name||"—"}</h2>
-                {(viewCert.title||viewCert.program)&&<p style={{color:"#666",margin:"0 0 6px",fontSize:14}}>{viewCert.title||viewCert.program}</p>}
-                {viewCert.issued&&<p style={{color:"#999",margin:0,fontSize:13}}>Completed on: <strong>{viewCert.issued}</strong></p>}
+                {viewCert.filePath ? (
+                  <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:12}}>
+                    <div style={{width:64,height:64,borderRadius:12,background:"#e6f4ea",display:"flex",alignItems:"center",justifyContent:"center",fontSize:32}}>📄</div>
+                    <h4 style={{margin:0,color:"#1e8e3e",fontSize:18}}>Uploaded Certificate</h4>
+                    <p style={{margin:0,fontSize:13,color:"#888",fontFamily:"monospace"}}>{viewCert.customFilename||"—"}</p>
+                    <p style={{margin:0,fontSize:12,color:"#aaa"}}>Open the public page to view the certificate image</p>
+                  </div>
+                ) : (
+                  <>
+                    <img src="/img/logo.png" alt="logo" style={{height:40,margin:"0 auto 10px"}}/>
+                    <h4 style={{margin:"0 0 4px",color:"#1e8e3e",fontSize:18}}>Certificate of Completion</h4>
+                    {viewCert.templateName&&<p style={{margin:"0 0 8px",fontSize:12,color:"#bbb"}}>Template: {viewCert.templateName}</p>}
+                    <p style={{color:"#888",margin:"0 0 12px",fontSize:13}}>This is to certify that</p>
+                    <h2 style={{margin:"0 0 6px",fontSize:24,color:"#111"}}>{viewCert.name||"—"}</h2>
+                    {(viewCert.title||viewCert.program)&&<p style={{color:"#666",margin:"0 0 6px",fontSize:14}}>{viewCert.title||viewCert.program}</p>}
+                    {viewCert.issued&&<p style={{color:"#999",margin:0,fontSize:13}}>Completed on: <strong>{viewCert.issued}</strong></p>}
+                  </>
+                )}
               </div>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:24,flexWrap:"wrap"}}>
                 <div style={{textAlign:"center"}}>

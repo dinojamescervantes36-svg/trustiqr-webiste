@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs grep:*)",
+      "Bash(find /c/Users/espir/trustiqr-webiste -name *.sql -o -name *schema* -o -name *migration*)"
+    ]
+  }
+}

@@ -9,6 +9,25 @@ export default function PublicVerifyPage() {
   const [cert, setCert] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownload = async (url, filename) => {
+    setDownloading(true);
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = filename || "certificate";
+      a.click();
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      alert("Download failed. Try right-clicking the image and saving it.");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   useEffect(() => {
     if (!params?.id) return;
@@ -59,15 +78,37 @@ export default function PublicVerifyPage() {
             )}
           </div>
 
-          {/* Recipient */}
+          {/* Recipient / Uploaded image */}
           {!isRevoked && (
             <div style={{ textAlign: "center", marginBottom: 32 }}>
-              <p style={{ color: "#666", margin: "0 0 8px", fontSize: 16 }}>This is to certify that</p>
-              <h2 style={{ margin: "0 0 8px", fontSize: 32, color: "#111", fontWeight: 700 }}>{cert.recipient_name || "—"}</h2>
-              <p style={{ color: "#666", margin: "0 0 16px", fontSize: 16 }}>has successfully completed</p>
-              <h3 style={{ margin: "0 0 8px", fontSize: 20, color: "#1e8e3e" }}>{cert.certificate_title || cert.program || "—"}</h3>
-              {cert.completion_date && (
-                <p style={{ color: "#999", marginTop: 16, fontSize: 14 }}>Completed on: <strong>{cert.completion_date}</strong></p>
+              {cert.file_path ? (
+                <>
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/certificates/${cert.file_path}`}
+                    alt="Certificate"
+                    style={{ width: "100%", maxHeight: 500, objectFit: "contain", borderRadius: 8 }}
+                  />
+                  <button
+                    onClick={() => handleDownload(
+                      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/certificates/${cert.file_path}`,
+                      cert.custom_filename || cert.original_filename || "certificate"
+                    )}
+                    disabled={downloading}
+                    style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 16, padding: "10px 20px", background: "#1e8e3e", color: "#fff", borderRadius: 8, border: "none", cursor: downloading ? "not-allowed" : "pointer", fontWeight: 600, fontSize: 14, opacity: downloading ? 0.7 : 1 }}
+                  >
+                    {downloading ? "Downloading…" : "⬇ Download Certificate"}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p style={{ color: "#666", margin: "0 0 8px", fontSize: 16 }}>This is to certify that</p>
+                  <h2 style={{ margin: "0 0 8px", fontSize: 32, color: "#111", fontWeight: 700 }}>{cert.recipient_name || "—"}</h2>
+                  <p style={{ color: "#666", margin: "0 0 16px", fontSize: 16 }}>has successfully completed</p>
+                  <h3 style={{ margin: "0 0 8px", fontSize: 20, color: "#1e8e3e" }}>{cert.certificate_title || cert.program || "—"}</h3>
+                  {cert.completion_date && (
+                    <p style={{ color: "#999", marginTop: 16, fontSize: 14 }}>Completed on: <strong>{cert.completion_date}</strong></p>
+                  )}
+                </>
               )}
             </div>
           )}
